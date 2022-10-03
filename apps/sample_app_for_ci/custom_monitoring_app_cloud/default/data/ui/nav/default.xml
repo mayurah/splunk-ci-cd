@@ -1,0 +1,6 @@
+<nav search_view="search">
+  <view name="hello" default='true' />
+  <view name="fizbin" />
+  <view name="generatetest" />
+  <view name="search" />
+</nav>

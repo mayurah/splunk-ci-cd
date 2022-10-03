@@ -1,0 +1,15 @@
+<dashboard version="1.1" theme="dark">
+  <label>generatetest</label>
+  <row>
+    <panel>
+      <event>
+        <search>
+          <query>|generatetest</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="list.drilldown">none</option>
+      </event>
+    </panel>
+  </row>
+</dashboard>
