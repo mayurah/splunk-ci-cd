@@ -24,3 +24,6 @@ Tip: Ensure user you create token out of has a `sc_admin` role.
 brew tap splunk/tap
 brew install acs
 ```
+
+
+### Docker Image that could be used in a CI pipeline
