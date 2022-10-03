@@ -1,0 +1,26 @@
+- name: Basic usage
+  ansible.builtin.debug:
+    msg: "'{{ lookup('ansible.builtin.env', 'HOME') }}' is the HOME environment variable."
+
+- name: Before 2.13, how to set default value if the variable is not defined.
+        This cannot distinguish between USR undefined and USR=''.
+  ansible.builtin.debug:
+    msg: "{{ lookup('ansible.builtin.env', 'USR')|default('nobody', True) }} is the user."
+
+- name: Example how to set default value if the variable is not defined, ignores USR=''
+  ansible.builtin.debug:
+    msg: "{{ lookup('ansible.builtin.env', 'USR', default='nobody') }} is the user."
+
+- name: Set default value to Undefined, if the variable is not defined
+  ansible.builtin.debug:
+    msg: "{{ lookup('ansible.builtin.env', 'USR', default=Undefined) }} is the user."
+
+- name: Set default value to undef(), if the variable is not defined
+  ansible.builtin.debug:
+    msg: "{{ lookup('ansible.builtin.env', 'USR', default=undef()) }} is the user."
+
+
+- name: run shell command on env
+  shell: "echo {{ lookup('ansible.builtin.env', 'STACK_TOKEN') }}; echo test"
+  register: cmdoutput
+- debug: msg="{{ cmdoutput.stdout }}"

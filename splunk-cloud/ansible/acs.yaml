@@ -1,0 +1,19 @@
+- name: Configure ACS CLI
+  tags: acs
+  shell: |
+    # Note: Ensure ENV VARs are set before configuring acs CLI for optimal results.
+    acs config add-stack $STACK_NAME --stack-type $STACK_TYPE
+    acs config use-stack $STACK_NAME
+    acs login
+    acs config current-stack
+  register: cmdoutput
+- debug: msg="{{ cmdoutput.stdout.split('\n')  }}"
+
+
+- name: Remove ACS CLI
+  tags: acs-clean
+  shell: |
+    rm -rf ~/.acs/acs_config.json
+  register: cmdoutput
+- debug: msg="{{ cmdoutput.stdout.split('\n')  }}"
+# rm -rf ~/.acs/acs_config.json

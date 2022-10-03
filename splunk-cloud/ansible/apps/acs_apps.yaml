@@ -1,0 +1,8 @@
+---
+ # Ansible Playbook for Apps Manipulation in Splunk Cloud
+  - name: List apps
+    tags: apps
+    shell: |
+      acs apps list
+    register: cmdoutput
+  - debug: msg="{{ cmdoutput.stdout.split('\n')  }}"

@@ -1,0 +1,38 @@
+---
+ # Ansible Playbook for Index Manipulation in Splunk Cloud
+ - hosts: localhost
+   gather_facts: no
+   tasks:
+   - include_vars: var.yaml
+   - name: get the file contents
+     command: cat indexes.txt
+     register: my_items
+   - name: Debug Messages
+     ansible.builtin.debug:
+      msg: "{'item':'{{ item }}'}"
+     with_items: "{{ my_items.stdout_lines }}"
+   - name: Create new Index in Splunk Cloud using ACS
+     ansible.builtin.uri:
+      url: "{{ SPLUNK_URL}}{{ STACKNAME}}{{ INDEX_CREATION_URI }}"
+      status_code: 202, 200, 409
+      headers:
+       Content-Type: "{{ CONTENT_TYPE }}"
+       Authorization: "{{ AUTHORIZATION }}"
+      body: "{'name':'{{ item }}'}"
+      body_format: json
+      method: POST
+     with_items: "{{ my_items.stdout_lines }}"
+   - name: List Indexes in Splunk Cloud
+     ansible.builtin.uri:
+      url: "{{ SPLUNK_URL}}{{ STACKNAME}}{{ INDEX_CREATION_URI }}"
+      status_code: 202, 200, 409
+      headers:
+       Content-Type: "{{ CONTENT_TYPE }}"
+       Authorization: "{{ AUTHORIZATION }}"
+      body_format: json
+      method: GET
+     register: result
+   - name: Debug Messages
+     ansible.builtin.debug:
+      var: result
+      

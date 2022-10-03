@@ -1,0 +1,8 @@
+ - hosts: localhost
+   gather_facts: no
+   tasks:
+    # - include: test-env.yaml
+    - name: Setup ACS
+      include: acs.yaml
+    - name: Apps Manipulation
+      include: apps/acs_apps.yaml
