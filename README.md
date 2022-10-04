@@ -1,4 +1,5 @@
-# splunk-ci-cd
+# Splunk CI/CD Template via Ansible
+
 Collection of snippets that can be added to CI/CD pipeline. 
 
 
@@ -52,7 +53,7 @@ export STACK_TOKEN=<token>
 
 #### Test Playbook:
 
-```
+```sh
 cd splunk-ci-cd/splunk-cloud/ansible
 ansible-playbook main.yaml
 
@@ -72,13 +73,21 @@ ansible-playbook main.yaml --tags "acs-clean"
 
 #### Test ACS CLI
 
-```
+```sh
 acs config add-stack $STACK_NAME --stack-type $STACK_TYPE
 acs config use-stack $STACK_NAME
 acs login
 acs config current-stack
 ```
 
+
+#### Enable REST API via ACS
+
+```sh
+# Note that allowing 0.0.0.0/0 means anyone can reach REST API. 
+# Maintain allowlist CIDR of internal corporate IP ranges to apply IP based restrictions.
+acs ip-allowlist create search-api --subnets=0.0.0.0/0
+```
 
 
 #### Troubleshooting
